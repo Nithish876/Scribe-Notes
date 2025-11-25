@@ -1,50 +1,63 @@
-# Welcome to your Expo app 👋
+# Scrite-Notes App 📝
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A professional **offline-first + online backup** notes app built with **React Native + Expo + SQLite**. Open source and future-proof, designed for speed, flexibility, and clean code.
 
-## Get started
+---
 
-1. Install dependencies
+## Features ✨
 
-   ```bash
-   npm install
-   ```
+* Fully offline notes
+* Online backup (future-ready)
+* Simple & clean UI
+* TypeScript support
+* Professional folder structure
+* Easy to fork and contribute
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Installation 🚀
 
 ```bash
-npm run reset-project
+# Install dependencies
+npm install
+
+# Start Expo
+npm start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## Folder Structure 🗂️
 
-To learn more about developing your project with Expo, look at the following resources:
+```
+/src
+  /components  # Reusable UI components
+  /screens     # App screens
+  /services    # SQLite DB & sync logic
+  /hooks       # Custom hooks
+  /utils       # Helper functions
+  /assets      # Icons, images
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## Database 💾
 
-Join our community of developers creating universal apps.
+* Uses **Expo SQLite**
+* `notes` table: `id | title | content | updatedAt`
+* Offline-first design
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## Contributing 🤝
+
+1. Fork it
+2. Create your branch
+3. Open PR
+4. Follow coding standards & keep it clean
+
+---
+
+## License 📄
+
+MIT License
