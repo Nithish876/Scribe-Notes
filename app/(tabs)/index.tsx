@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Card, FAB, Searchbar, Text, useTheme } from 'react-native-paper';
 
-// --- Note Data Type Definition ---
 type NoteItem = {
     id: number;
     title: string;
@@ -17,16 +16,13 @@ export default function HomeScreen() {
     // Hooks and State
     const { data, isLoading, isError, error } = useGetNotes();
     const [searchQuery, setSearchQuery] = useState('');
-    const theme = useTheme(); // Access the current theme (for colors)
-
-    // --- Data Filtering Logic ---
+    const theme = useTheme(); 
+ 
     const filteredNotes = data?.filter((note:any) =>
         note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         note.content.toLowerCase().includes(searchQuery.toLowerCase())
     ) || [];
-
-    // --- Render States ---
-
+ 
     if (isLoading) {
         return (
             <ThemedView style={styles.loadingContainer}>
@@ -59,18 +55,16 @@ export default function HomeScreen() {
                 <FAB
                     icon="plus"
                     style={styles.fab}
-                    onPress={() => { router.replace("notes/new")}}
+                    onPress={() => { router.replace("/(tabs)/notes/new")}}
                 />
             </ThemedView>
         );
     }
-
-    // --- Note Card Component ---
+ 
     const renderNoteItem = ({ item }: { item: NoteItem }) => (
         <View style={styles.cardWrapper}>
-            <Link href={`notes/${item.id}`} asChild>
-                <Card 
-                    // Use theme colors for a premium look
+            <Link href={`/(tabs)/notes/${item.id}`} asChild>
+                <Card  
                     style={{ backgroundColor: theme.colors.elevation.level2 }} 
                     onPress={() => {}} 
                 >
@@ -95,30 +89,25 @@ export default function HomeScreen() {
             </Link>
         </View>
     );
-
-    // --- Main Screen Render ---
+ 
     return (
         <ThemedView style={styles.container}>
-            
-            {/* Header and Search */}
+ 
             <View style={styles.header}>
                 <Text variant="headlineLarge" style={styles.mainTitle}>Scribe Notes</Text>
                 <Searchbar
                     placeholder="Search titles or content..."
                     onChangeText={setSearchQuery}
                     value={searchQuery}
-                    style={styles.searchBar}
-                    // Apply theme color for modern look
+                    style={styles.searchBar} 
                     theme={{ colors: { primary: theme.colors.primary } }}
                 />
-                
-                {/* Displaying search results count */}
+                 
                 <Text variant="bodySmall" style={styles.resultsCount}>
                     {filteredNotes.length} {filteredNotes.length === 1 ? 'note' : 'notes'} found
                 </Text>
             </View>
-
-            {/* List of Notes */}
+ 
             <FlatList
                 data={filteredNotes}
                 renderItem={renderNoteItem}
@@ -126,38 +115,36 @@ export default function HomeScreen() {
                 style={styles.list}
                 contentContainerStyle={styles.listContent}
             />
-
-            {/* Floating Action Button */}
+ 
             <FAB
                 icon="plus"
                 style={styles.fab}
-                onPress={() => { router.replace("notes/new")}}
+                onPress={() => { router.replace("/(tabs)/notes/new")}}
             />
         </ThemedView>
     );
 }
-
-// --- Stylesheet for Premium Design ---
+ 
 const styles = StyleSheet.create({
     container: {
         flex: 1, 
     },
     header: {
         paddingHorizontal: 20,
-        paddingTop: 40, // Increased padding for a spacious feel
+        paddingTop: 40,  
         paddingBottom: 15,
-        backgroundColor: 'transparent', // Let ThemedView handle background
+        backgroundColor: 'transparent', 
     },
     mainTitle: {
         fontWeight: 'bold',
         marginBottom: 15,
-        // Using a custom primary color/text color for the title
-        color: '#4A90E2', // Example premium blue color
+       
+        color: '#4A90E2', 
     },
     searchBar: {
         borderRadius: 12,
         marginBottom: 10,
-        elevation: 2, // Subtle shadow for depth
+        elevation: 2, 
     },
     resultsCount: {
         opacity: 0.6,
@@ -167,11 +154,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     listContent: {
-        paddingBottom: 80, // Space for the FAB
-        paddingHorizontal: 20, // Horizontal padding for the list items
+        paddingBottom: 80, 
+        paddingHorizontal: 20,
     },
     cardWrapper: {
-        marginBottom: 12, // Space between cards
+        marginBottom: 12,
     },
     cardHeader: {
         flexDirection: 'row',
@@ -180,7 +167,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     cardTitle: {
-        fontWeight: '600', // Semi-bold for title
+        fontWeight: '600', 
     },
     cardDate: {
         opacity: 0.5,
@@ -195,7 +182,6 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: '#4A90E2', // Match FAB to premium accent color
     },
-    // --- State-Specific Styles ---
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -219,7 +205,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#FBE8E8', // Light red background for error
     },
     errorTitle: {
         fontSize: 20,

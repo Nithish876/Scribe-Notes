@@ -22,16 +22,16 @@ export interface CreateNoteDto {
  */
 export interface NoteDto {
   /** The unique identifier of the note (set by the database). */
-  Id: number; 
+  id: number; 
   
   /** The title of the note. */
-  Title: string;
+  title: string;
   
   /** The content of the note. */
-  Content: string;
+  content: string;
   
   /** The timestamp when the note was created (set by the server). */
-  CreatedAt: string; // Using string to represent DateTime from C#
+  createdAt: string; // Using string to represent DateTime from C#
 }
 
 // ===============================================

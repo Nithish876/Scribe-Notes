@@ -1,20 +1,16 @@
 import { ThemedView } from '@/components/themed-view';
+import { useGetNoteById } from '@/hooks/useApi';
 import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Card, IconButton, Text } from 'react-native-paper';
 
-const mockNotes = [
-  { id: '1', title: 'Meeting Notes', content: 'Discussed project updates, timelines, and assigned tasks to team members. Next steps include prototyping the UI.', createdAt: '2025-11-28' },
-  { id: '2', title: 'Grocery List', content: 'Milk, eggs, bread, cheese, apples, bananas. Don\'t forget the coffee!', createdAt: '2025-11-27' },
-  { id: '3', title: 'Ideas for App', content: 'UI improvements: Add dark mode toggle. New features: Voice-to-text notes, search functionality, and export to PDF.', createdAt: '2025-11-26' },
-];
-
 export default function NoteScreen() {
-  const { noteId } = useLocalSearchParams<{ noteId: string }>();
-  const note = mockNotes.find((n) => n.id === noteId);
-
-  if (!note) {
+  const { id } = useLocalSearchParams<{id:string}>(); 
+  console.log(id);
+  const {data,isError,isLoading} = useGetNoteById(Number(id));
+  console.log("NOe data ; ",data);
+  if (!data && !isLoading && !isError) {
     return (
       <ThemedView  style={styles.container}>
         <Text variant="bodyLarge" style={styles.errorText}>
@@ -24,30 +20,32 @@ export default function NoteScreen() {
     );
   }
 
+  if(isLoading){
+    return<Text>Loadin...</Text>
+  }
+
   return (
     <ScrollView style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
-          <Text variant="headlineMedium" style={styles.title}>{note.title}</Text>
+          <Text variant="headlineMedium" style={styles.title}>{data?.title}</Text>
           <Text variant="bodySmall" style={styles.date}>
-            {note.createdAt}
+            {data?.createdAt}
           </Text>
           <Text variant="bodyLarge" style={styles.content}>
-            {note.content}
+            {data?.content}
           </Text>
         </Card.Content>
         <Card.Actions>
           <IconButton
             icon="pencil"
-            onPress={() => {
-              // TODO: Open edit mode or navigate to edit screen
+            onPress={() => { 
               console.log('Edit note');
             }}
           />
           <IconButton
             icon="delete"
-            onPress={() => {
-              // TODO: Delete note and navigate back
+            onPress={() => { 
               router.back();
             }}
           />
@@ -60,7 +58,8 @@ export default function NoteScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    paddingTop:28
+
   },
   card: {
     margin: 16,
